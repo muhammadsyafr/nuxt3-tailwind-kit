@@ -36,10 +36,18 @@ const { value: password } = useField('password', undefined, {
 const onSubmit = handleSubmit(async (values) => {
   error.value = ''
   try {
-    const res = await $fetch('/api/auth/login', {
-      method: 'post',
-      body: values,
+    const vv = {
+      username_or_email: values.email,
+      password: values.password,
+    }
+
+    const res = await $fetch('https://maaf.ngerepotin.com/api/user/v1/login', {
+      method: 'POST',
+      body: vv,
     })
+
+    console.log(res)
+    console.log(vv)
 
     const token = res.token
     const user = res.user

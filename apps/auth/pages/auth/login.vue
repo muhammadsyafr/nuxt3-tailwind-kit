@@ -35,10 +35,14 @@ const { value: password } = useField('password', undefined, {
 
 const onSubmit = handleSubmit(async (values) => {
   error.value = ''
+  const vv = {
+    username_or_email: values.email,
+    password: values.password,
+  }
   try {
-    const res = await $fetch('/api/auth/login', {
-      method: 'post',
-      body: values,
+    const res = await $fetch('https://maaf.ngerepotin.com/api/user/v1/login', {
+      method: 'POST',
+      body: vv,
     })
 
     const token = res.token
@@ -69,14 +73,7 @@ const onSubmit = handleSubmit(async (values) => {
         {{ error }}
       </div>
 
-      <VInput
-        v-model="email"
-        wrapper-class="mb-4"
-        name="email"
-        label="Email"
-        placeholder="Email"
-        hint="Email: admin@example.com"
-      />
+      <input v-model="email" type="text" name="email">
       <VInput
         v-model="password"
         wrapper-class="mb-4"
